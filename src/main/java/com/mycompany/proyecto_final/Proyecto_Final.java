@@ -6,6 +6,10 @@ public class Proyecto_Final {
 
     public static void main(String[] args) {
         
+        ConexionDB conec = new ConexionDB();
+        conec.estableceConexion();
+        
+        
         Proyecto_Final proyecto = new Proyecto_Final();
         proyecto.MenuPokemon(); 
     }
