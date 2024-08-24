@@ -97,10 +97,4 @@ public class Pokemon {
     public void setMovimientos(String movimientos) {
         this.movimientos = movimientos;
     }
-
-
-    
-    
-    
-    
 }
