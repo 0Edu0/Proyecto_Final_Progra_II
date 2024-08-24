@@ -13,15 +13,26 @@ public class Proyecto_Final {
         Proyecto_Final proyecto = new Proyecto_Final();
         proyecto.MenuPokemon(); 
     }
-
-     public void MenuPokemon() {
-         TipoPokemon tipoPokemon = new TipoPokemon();
-         
         Scanner scanner = new Scanner(System.in);
-        boolean salir = false;
+        boolean salir = false;       
         
+    public void MenuPokemon(){
+        System.out.println("Ingrese una opción: ");
+            System.out.println("1. Ver Pokedex");
+            
+        int opcion1 = scanner.nextInt();
+        scanner.nextLine();
         
+        switch (opcion1){
+            case 1: 
+                menuPokedex();
+                break;
+        }
+    }
+        
+    public void menuPokedex(){
 
+            
         while (!salir) {
               System.out.println("Ingrese una opción:");
                 System.out.println("1. Ver pokemones normales");
@@ -35,6 +46,9 @@ public class Proyecto_Final {
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
+            
+            TipoPokemon tipoPokemon = new TipoPokemon();
+            
             switch (opcion) {
                 case 1:
                     tipoPokemon.getPokemonesNormales();
@@ -69,16 +83,6 @@ public class Proyecto_Final {
                     System.out.println("Opción no válida. Por favor intente de nuevo.");
             }
         }
-
         System.out.println("Programa terminado.");
     }
-    
-   
-
-        
-              
-
-                
-
-         
 }
