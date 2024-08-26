@@ -7,11 +7,11 @@ public class TipoPokemon {
     public void getPokemonesDeAgua() {
         QuerysMysql querymysql = new QuerysMysql();
         String query = "SELECT * FROM proyectofinalprogra.pokemon_agua;";
-        List<Pokemon> pokemones = querymysql.realizarConsulta(query);
+        List<Pokemon> pokemones = querymysql.realizarConsultaDetallada(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
             for (Pokemon pokemon : pokemones) {
-               querymysql. imprimirDetallesPokemon(pokemon);
+               querymysql. imprimirDetallesPokemonDetallado(pokemon);
             }
         } else {
             System.out.println("No existen Pokemones de Agua");
@@ -21,11 +21,11 @@ public class TipoPokemon {
      public void getPokemonesDeFuego() {
         QuerysMysql querymysql = new QuerysMysql();
         String query = "SELECT * FROM proyectofinalprogra.pokemon_fuego;";
-        List<Pokemon> pokemones = querymysql.realizarConsulta(query);
+        List<Pokemon> pokemones = querymysql.realizarConsultaDetallada(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
             for (Pokemon pokemon : pokemones) {
-               querymysql. imprimirDetallesPokemon(pokemon);
+               querymysql. imprimirDetallesPokemonDetallado(pokemon);
             }
         } else {
             System.out.println("No existen Pokemones de fuego");
@@ -35,11 +35,11 @@ public class TipoPokemon {
       public void getPokemonesDeElectrico() {
         QuerysMysql querymysql = new QuerysMysql();
         String query = "SELECT * FROM proyectofinalprogra.pokemon_electrico;";
-        List<Pokemon> pokemones = querymysql.realizarConsulta(query);
+        List<Pokemon> pokemones = querymysql.realizarConsultaDetallada(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
             for (Pokemon pokemon : pokemones) {
-               querymysql. imprimirDetallesPokemon(pokemon);
+               querymysql. imprimirDetallesPokemonDetallado(pokemon);
             }
         } else {
             System.out.println("No existen Pokemones Electricos");
@@ -50,11 +50,11 @@ public class TipoPokemon {
        public void getPokemonesDeHielo() {
         QuerysMysql querymysql = new QuerysMysql();
         String query = "SELECT * FROM proyectofinalprogra.pokemon_hielo;";
-        List<Pokemon> pokemones = querymysql.realizarConsulta(query);
+        List<Pokemon> pokemones = querymysql.realizarConsultaDetallada(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
             for (Pokemon pokemon : pokemones) {
-               querymysql. imprimirDetallesPokemon(pokemon);
+               querymysql. imprimirDetallesPokemonDetallado(pokemon);
             }
         } else {
             System.out.println("No existen Pokemones de huielo");
@@ -65,11 +65,11 @@ public class TipoPokemon {
         public void getPokemonesDePlanta() {
         QuerysMysql querymysql = new QuerysMysql();
         String query = "SELECT * FROM proyectofinalprogra.pokemon_planta;";
-        List<Pokemon> pokemones = querymysql.realizarConsulta(query);
+        List<Pokemon> pokemones = querymysql.realizarConsultaDetallada(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
             for (Pokemon pokemon : pokemones) {
-               querymysql. imprimirDetallesPokemon(pokemon);
+               querymysql. imprimirDetallesPokemonDetallado(pokemon);
             }
         } else {
             System.out.println("No existen Pokemones planta");
@@ -79,11 +79,11 @@ public class TipoPokemon {
           public void getPokemonesNormales() {
         QuerysMysql querymysql = new QuerysMysql();
         String query = "SELECT * FROM proyectofinalprogra.pokemon_normal;";
-        List<Pokemon> pokemones = querymysql.realizarConsulta(query);
+        List<Pokemon> pokemones = querymysql.realizarConsultaDetallada(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
             for (Pokemon pokemon : pokemones) {
-               querymysql. imprimirDetallesPokemon(pokemon);
+               querymysql. imprimirDetallesPokemonDetallado(pokemon);
             }
         } else {
             System.out.println("No existen Pokemones Normales");

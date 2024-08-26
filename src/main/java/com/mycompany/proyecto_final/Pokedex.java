@@ -1,24 +1,24 @@
-
 package com.mycompany.proyecto_final;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pokedex {
     
-    int CantPokemonGuardados;
-    ArrayList<Pokemon>listadoPokemons;
+    private int cantPokemonGuardados; 
+    private ArrayList<Pokemon> listadoPokemons;
 
-    public Pokedex(int CantPokemonGuardados, ArrayList<Pokemon> listadoPokemons) {
-        this.CantPokemonGuardados = CantPokemonGuardados;
-        this.listadoPokemons = listadoPokemons;
+    public Pokedex() {
+        this.cantPokemonGuardados = 0;
+        this.listadoPokemons = new ArrayList<>();
     }
 
     public int getCantPokemonGuardados() {
-        return CantPokemonGuardados;
+        return cantPokemonGuardados;
     }
 
-    public void setCantPokemonGuardados(int CantPokemonGuardados) {
-        this.CantPokemonGuardados = CantPokemonGuardados;
+    public void setCantPokemonGuardados(int cantPokemonGuardados) {
+        this.cantPokemonGuardados = cantPokemonGuardados;
     }
 
     public ArrayList<Pokemon> getListadoPokemons() {
@@ -29,7 +29,18 @@ public class Pokedex {
         this.listadoPokemons = listadoPokemons;
     }
     
+ public void getTodosPokemones() {
+    QuerysMysql querymysql = new QuerysMysql();
+    String query = "SELECT no_pokedex, nombre FROM todos_pokemones";  // Usando la vista
     
+    List<Pokemon> pokemones = querymysql.realizarConsultaBasica(query);
     
-    
+    if (pokemones != null && !pokemones.isEmpty()) {
+        for (Pokemon pokemon : pokemones) {
+            querymysql.imprimirDetallesPokemonBasico(pokemon);
+        }
+    } else {
+        System.out.println("No se encontraron Pokémon en la base de datos.");
+    }
+}
 }

@@ -7,28 +7,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuerysMysql {
-    
+
     // Constructor vacío para la clase
     public QuerysMysql() {
     }
-    
-    // Método que realiza la consulta y devuelve un objeto Pokemon
-    public List<Pokemon> realizarConsulta(String query) {
+
+    // Método para consultas básicas (solo no_pokedex y nombre)
+    public List<Pokemon> realizarConsultaBasica(String query) {
         ConexionDB conexionDB = new ConexionDB();
         Connection conn = conexionDB.estableceConexion();
-       List<Pokemon> listaPokemones = new ArrayList<>();  // Lista para almacenar los Pokemones
+        List<Pokemon> listaPokemones = new ArrayList<>();  // Lista para almacenar los Pokemones
 
         if (conn != null) {
-            try {
-                // Crear un objeto Statement para ejecutar la consulta
-                Statement stmt = conn.createStatement();
-                
-                // Ejecutar la consulta y obtener los resultados
-                ResultSet rs = stmt.executeQuery(query);
-      
-                // Iterar sobre los resultados utilizando un ciclo while
+            try (Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(query)) {
+
                 while (rs.next()) {
-                    // Crear un nuevo objeto Pokemon para cada registro
+                    Pokemon pokemon = new Pokemon();
+                    pokemon.setNo_pokedex(rs.getString("no_pokedex"));
+                    pokemon.setNombre(rs.getString("nombre"));
+                    listaPokemones.add(pokemon);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No se pudo establecer la conexión a la base de datos.");
+        }
+
+        return listaPokemones;
+    }
+
+    // Método para consultas detalladas (todos los campos)
+    public List<Pokemon> realizarConsultaDetallada(String query) {
+        ConexionDB conexionDB = new ConexionDB();
+        Connection conn = conexionDB.estableceConexion();
+        List<Pokemon> listaPokemones = new ArrayList<>();  // Lista para almacenar los Pokemones
+
+        if (conn != null) {
+            try (Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(query)) {
+
+                while (rs.next()) {
                     Pokemon pokemon = new Pokemon();
                     pokemon.setNo_pokedex(rs.getString("no_pokedex"));
                     pokemon.setNombre(rs.getString("nombre"));
@@ -38,27 +59,31 @@ public class QuerysMysql {
                     pokemon.setEvolucion(rs.getString("evolucion"));
                     pokemon.setNivel_evolucion(rs.getString("nivel_evolucion"));
                     pokemon.setMovimientos(rs.getString("movimientos"));
-              
-                     listaPokemones.add(pokemon);
+                    listaPokemones.add(pokemon);
                 }
-                
-                // Cerrar los recursos
-                rs.close();
-                stmt.close();
-                conn.close();
-                
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("No se pudo establecer la conexión a la base de datos.");
         }
-        
+
         return listaPokemones;
-       }
-    
-    public void imprimirDetallesPokemon(Pokemon pokemon) {
+    }
+
+    // Método para imprimir detalles básicos
+    public void imprimirDetallesPokemonBasico(Pokemon pokemon) {
+        StringBuilder detalles = new StringBuilder();
+        detalles.append("No_pokedex: ").append(pokemon.getNo_pokedex()).append("\n");
+        detalles.append("Nombre: ").append(pokemon.getNombre()).append("\n");
+        detalles.append("-------------------------------");
+
+        System.out.println(detalles.toString());
+    }
+
+    // Método para imprimir detalles completos
+    public void imprimirDetallesPokemonDetallado(Pokemon pokemon) {
         StringBuilder detalles = new StringBuilder();
         detalles.append("No_pokedex: ").append(pokemon.getNo_pokedex()).append("\n");
         detalles.append("Nombre: ").append(pokemon.getNombre()).append("\n");
@@ -72,5 +97,4 @@ public class QuerysMysql {
 
         System.out.println(detalles.toString());
     }
-    }
-
+}
