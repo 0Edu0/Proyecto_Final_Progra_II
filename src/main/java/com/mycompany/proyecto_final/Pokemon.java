@@ -18,8 +18,9 @@ public class Pokemon {
     String nivel_evolucion;
     String movimientos;
     ArrayList<String>habilidades;
+    String descripcion;
 
-    public Pokemon(String no_pokedex, String nombre, String hp_base, String pp_base, String primer_movimiento, String evolucion, String nivel_evolucion, String movimientos) {
+    public Pokemon(String no_pokedex, String nombre, String hp_base, String pp_base, String primer_movimiento, String evolucion, String nivel_evolucion, String movimientos, String descripcion) {
         this.no_pokedex = no_pokedex;
         this.nombre = nombre;
         this.hp_base = hp_base;
@@ -28,6 +29,7 @@ public class Pokemon {
         this.evolucion = evolucion;
         this.nivel_evolucion = nivel_evolucion;
         this.movimientos = movimientos;
+        this.descripcion = descripcion;
     }
 
     public Pokemon (){
@@ -97,4 +99,13 @@ public class Pokemon {
     public void setMovimientos(String movimientos) {
         this.movimientos = movimientos;
     }
+    
+    public String getDescripcion(){
+        return descripcion;
+    }
+    
+    public void setDescripcion(String descripcion){
+        this.descripcion = descripcion;
+    }
+    
 }

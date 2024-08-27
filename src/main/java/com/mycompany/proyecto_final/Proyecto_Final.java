@@ -41,13 +41,15 @@ public class Proyecto_Final {
                 System.out.println("4. Ver pokemones de Planta");
                 System.out.println("5. Ver pokemones eléctricos");
                 System.out.println("6. Ver pokemones de Hielo");
-                System.out.println("7. Salir");
+                System.out.println("7. Mostrar todos");
+                System.out.println("8. Salir");
 
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
             
             TipoPokemon tipoPokemon = new TipoPokemon();
+            Pokedex pokedex = new Pokedex();
             
             switch (opcion) {
                 case 1:
@@ -75,7 +77,11 @@ public class Proyecto_Final {
                      tipoPokemon.getPokemonesDeHielo();
                     break;
                     
-                   case 7:
+                 case 7:
+                     pokedex.getTodosLosPokemon();
+                     break;
+                    
+                   case 8:
                    salir = true;
                     break;
 
