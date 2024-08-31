@@ -9,16 +9,17 @@ public class Proyecto_Final {
         ConexionDB conec = new ConexionDB();
         conec.estableceConexion();
         
-        
         Proyecto_Final proyecto = new Proyecto_Final();
         proyecto.MenuPokemon(); 
     }
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;       
-        
+
+//Menu principal       
     public void MenuPokemon(){
         System.out.println("Ingrese una opción: ");
             System.out.println("1. Ver Pokedex");
+            System.out.println("2. Combate");
             
         int opcion1 = scanner.nextInt();
         scanner.nextLine();
@@ -27,12 +28,13 @@ public class Proyecto_Final {
             case 1: 
                 menuPokedex();
                 break;
+            case 2:
+                menuPrincipalCombate();
+                break;
         }
     }
-        
+//Menu para la Pokedex        
     public void menuPokedex(){
-
-            
         while (!salir) {
               System.out.println("Ingrese una opción:");
                 System.out.println("1. Ver pokemones normales");
@@ -47,7 +49,6 @@ public class Proyecto_Final {
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
-            
             TipoPokemon tipoPokemon = new TipoPokemon();
             Pokedex pokedex = new Pokedex();
             
@@ -90,5 +91,31 @@ public class Proyecto_Final {
             }
         }
         System.out.println("Programa terminado.");
+    }
+    
+    public void menuPrincipalCombate(){
+        System.out.println("Ingrese una opción:");
+            System.out.println("1. Ver Pokemon disponibles para combate.");
+            
+        int opcion1 = scanner.nextInt();
+        scanner.nextLine();
+        
+        switch (opcion1){
+            case 1: 
+                menuPokemonDisponiblesCombate();
+                break;
+        }
+    }
+    
+    public void menuPokemonDisponiblesCombate(){
+        System.out.println("1. Ver Pokemon tipo agua.");
+        
+        int opcion1 = scanner.nextInt();
+        scanner.nextLine();
+        
+        switch (opcion1){
+            case 1: 
+                PokemonCombateAgua.pokemonCombate_Agua(null);
+        }
     }
 }

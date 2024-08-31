@@ -17,7 +17,7 @@ public class Pokemon {
     String evolucion;
     String nivel_evolucion;
     String movimientos;
-    ArrayList<String>habilidades;
+    ArrayList<String> habilidades;
     String descripcion;
 
     public Pokemon(String no_pokedex, String nombre, String hp_base, String pp_base, String primer_movimiento, String evolucion, String nivel_evolucion, String movimientos, String descripcion) {

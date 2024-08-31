@@ -36,7 +36,4 @@ public class Combate {
     public void setTurnoActual(String turnoActual) {
         this.turnoActual = turnoActual;
     }
-    
-    
-    
 }
