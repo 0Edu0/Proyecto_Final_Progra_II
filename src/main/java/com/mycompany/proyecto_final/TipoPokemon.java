@@ -6,7 +6,7 @@ public class TipoPokemon {
 
     public void getPokemonesDeAgua() {
         QuerysMysql querymysql = new QuerysMysql();
-        String query = "SELECT * FROM proyectofinalprogra.pokemon_agua;";
+        String query = "SELECT * FROM proyectofinalprograii.pokemon_agua;";
         List<Pokemon> pokemones = querymysql.realizarConsulta(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
@@ -20,7 +20,7 @@ public class TipoPokemon {
     
      public void getPokemonesDeFuego() {
         QuerysMysql querymysql = new QuerysMysql();
-        String query = "SELECT * FROM proyectofinalprogra.pokemon_fuego;";
+        String query = "SELECT * FROM proyectofinalprograii.pokemon_fuego;";
         List<Pokemon> pokemones = querymysql.realizarConsulta(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
@@ -34,7 +34,7 @@ public class TipoPokemon {
 
       public void getPokemonesDeElectrico() {
         QuerysMysql querymysql = new QuerysMysql();
-        String query = "SELECT * FROM proyectofinalprogra.pokemon_electrico;";
+        String query = "SELECT * FROM proyectofinalprograii.pokemon_electrico;";
         List<Pokemon> pokemones = querymysql.realizarConsulta(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
@@ -49,7 +49,7 @@ public class TipoPokemon {
  
        public void getPokemonesDeHielo() {
         QuerysMysql querymysql = new QuerysMysql();
-        String query = "SELECT * FROM proyectofinalprogra.pokemon_hielo;";
+        String query = "SELECT * FROM proyectofinalprograii.pokemon_hielo;";
         List<Pokemon> pokemones = querymysql.realizarConsulta(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
@@ -64,7 +64,7 @@ public class TipoPokemon {
        
         public void getPokemonesDePlanta() {
         QuerysMysql querymysql = new QuerysMysql();
-        String query = "SELECT * FROM proyectofinalprogra.pokemon_planta;";
+        String query = "SELECT * FROM proyectofinalprograii.pokemon_planta;";
         List<Pokemon> pokemones = querymysql.realizarConsulta(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {
@@ -78,7 +78,7 @@ public class TipoPokemon {
      
           public void getPokemonesNormales() {
         QuerysMysql querymysql = new QuerysMysql();
-        String query = "SELECT * FROM proyectofinalprogra.pokemon_normal;";
+        String query = "SELECT * FROM proyectofinalprograii.pokemon_normal;";
         List<Pokemon> pokemones = querymysql.realizarConsulta(query);
         
         if (pokemones != null && !pokemones.isEmpty()) {

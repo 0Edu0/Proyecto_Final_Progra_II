@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.proyecto_final;
 
 import java.sql.Connection;
@@ -6,17 +10,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuerysMysql {
-    
+/**
+ *
+ * @author eduli
+ */
+public class QuerysMysql_Pokedex {    
     // Constructor vacío para la clase
-    public QuerysMysql() {
+    public QuerysMysql_Pokedex() {
     }
     
     // Método que realiza la consulta y devuelve un objeto Pokemon
     public List<Pokemon> realizarConsulta(String query) {
         ConexionDB conexionDB = new ConexionDB();
         Connection conn = conexionDB.estableceConexion();
-       List<Pokemon> listaPokemones = new ArrayList<>();  // Lista para almacenar los Pokemones
+       List<Pokemon> listaPokemon = new ArrayList<>();  // Lista para almacenar los Pokemones
 
         if (conn != null) {
             try {
@@ -30,16 +37,11 @@ public class QuerysMysql {
                 while (rs.next()) {
                     // Crear un nuevo objeto Pokemon para cada registro
                     Pokemon pokemon = new Pokemon();
-                    pokemon.setNo_pokedex(rs.getString("no_pokedex"));
-                    pokemon.setNombre(rs.getString("nombre"));
-                    pokemon.setHp_base(rs.getString("hp_base"));
-                    pokemon.setPp_base(rs.getString("pp_base"));
-                    pokemon.setPrimer_movimiento(rs.getString("primer_movimiento"));
-                    pokemon.setEvolucion(rs.getString("evolucion"));
-                    pokemon.setNivel_evolucion(rs.getString("nivel_evolucion"));
-                    pokemon.setMovimientos(rs.getString("movimientos"));
+                    pokemon.setNo_pokedex(rs.getString("NumeroPokedex"));
+                    pokemon.setNombre(rs.getString("Nombre"));
+                    pokemon.setDescripcion(rs.getString("Descripcion"));
               
-                     listaPokemones.add(pokemon);
+                     listaPokemon.add(pokemon);
                 }
                 
                 // Cerrar los recursos
@@ -55,19 +57,14 @@ public class QuerysMysql {
             System.out.println("No se pudo establecer la conexión a la base de datos.");
         }
         
-        return listaPokemones;
+        return listaPokemon;
        }
     
     public void imprimirDetallesPokemon(Pokemon pokemon) {
         StringBuilder detalles = new StringBuilder();
-        detalles.append("No_pokedex: ").append(pokemon.getNo_pokedex()).append("\n");
+        detalles.append("NumeroPokedex: ").append(pokemon.getNo_pokedex()).append("\n");
         detalles.append("Nombre: ").append(pokemon.getNombre()).append("\n");
-        detalles.append("Hp_Base: ").append(pokemon.getHp_base()).append("\n");
-        detalles.append("PP_Base: ").append(pokemon.getPp_base()).append("\n");
-        detalles.append("Primer Movimiento: ").append(pokemon.getPrimer_movimiento()).append("\n");
-        detalles.append("Evolución: ").append(pokemon.getEvolucion()).append("\n");
-        detalles.append("Nivel Evolución: ").append(pokemon.getNivel_evolucion()).append("\n");
-        detalles.append("Movimientos: ").append(pokemon.getMovimientos()).append("\n");
+        detalles.append("Descripcion: ").append(pokemon.getDescripcion()).append("\n");
         detalles.append("-------------------------------");
 
         System.out.println(detalles.toString());

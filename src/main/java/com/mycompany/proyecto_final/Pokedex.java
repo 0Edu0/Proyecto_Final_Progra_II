@@ -1,35 +1,19 @@
-
 package com.mycompany.proyecto_final;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pokedex {
+    public void getTodosLosPokemon() {
+    QuerysMysql_Pokedex querymysql = new QuerysMysql_Pokedex();
+    String query = "SELECT * FROM proyectofinalprograii.todos;";
+    List<Pokemon> pokemones = querymysql.realizarConsulta(query);
     
-    int CantPokemonGuardados;
-    ArrayList<Pokemon>listadoPokemons;
-
-    public Pokedex(int CantPokemonGuardados, ArrayList<Pokemon> listadoPokemons) {
-        this.CantPokemonGuardados = CantPokemonGuardados;
-        this.listadoPokemons = listadoPokemons;
+    if (pokemones != null && !pokemones.isEmpty()){
+        for (Pokemon pokemon : pokemones){
+            querymysql. imprimirDetallesPokemon(pokemon);
+        }
+    }else {
+            System.out.println("No se ha registrado ningun Pokemon");
+          }
     }
-
-    public int getCantPokemonGuardados() {
-        return CantPokemonGuardados;
-    }
-
-    public void setCantPokemonGuardados(int CantPokemonGuardados) {
-        this.CantPokemonGuardados = CantPokemonGuardados;
-    }
-
-    public ArrayList<Pokemon> getListadoPokemons() {
-        return listadoPokemons;
-    }
-
-    public void setListadoPokemons(ArrayList<Pokemon> listadoPokemons) {
-        this.listadoPokemons = listadoPokemons;
-    }
-    
-    
-    
-    
 }
