@@ -43,8 +43,7 @@ public class Proyecto_Final {
     // Menu para la Pokedex
     public void menuPokedex() {
         while (!salir) {
-<<<<<<< HEAD
-              System.out.println("Ingrese una opción:");
+
                 System.out.println("1. Ver pokemones normales");
                 System.out.println("2. Ver pokemones de Agua");
                 System.out.println("3. Ver pokemones de Fuego");
@@ -52,31 +51,14 @@ public class Proyecto_Final {
                 System.out.println("5. Ver pokemones eléctricos");
                 System.out.println("6. Ver pokemones de Hielo");
                 System.out.println("7. Ver todos los pokemones");
-
                 System.out.println("8. Salir");
-=======
-            System.out.println("Ingrese una opción:");
-            System.out.println("1. Ver pokemones normales");
-            System.out.println("2. Ver pokemones de Agua");
-            System.out.println("3. Ver pokemones de Fuego");
-            System.out.println("4. Ver pokemones de Planta");
-            System.out.println("5. Ver pokemones eléctricos");
-            System.out.println("6. Ver pokemones de Hielo");
-            System.out.println("7. Mostrar todos");
-            System.out.println("8. Salir");
->>>>>>> 157b37f2c87b5d046569494b1cd7c44e0f1ff5d3
 
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
             TipoPokemon tipoPokemon = new TipoPokemon();
             Pokedex pokedex = new Pokedex();
-<<<<<<< HEAD
-           
-            
-=======
 
->>>>>>> 157b37f2c87b5d046569494b1cd7c44e0f1ff5d3
             switch (opcion) {
                 case 1:
                     tipoPokemon.getPokemonesNormales();
@@ -96,7 +78,6 @@ public class Proyecto_Final {
                 case 6:
                     tipoPokemon.getPokemonesDeHielo();
                     break;
-<<<<<<< HEAD
                     
                   case 7:
                     pokedex.getTodosPokemones();
@@ -104,13 +85,13 @@ public class Proyecto_Final {
                     
                    case 8:
                    salir = true;
-=======
-                case 7:
+                   
+                case 9:
                     pokedex.getTodosLosPokemon();
                     break;
-                case 8:
+                case 10:
                     salir = true;
->>>>>>> 157b37f2c87b5d046569494b1cd7c44e0f1ff5d3
+
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor intente de nuevo.");
