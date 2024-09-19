@@ -98,3 +98,7 @@ public class QuerysMysql {
         System.out.println(detalles.toString());
     }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 157b37f2c87b5d046569494b1cd7c44e0f1ff5d3
