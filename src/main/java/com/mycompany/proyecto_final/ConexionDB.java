@@ -11,7 +11,7 @@ public class ConexionDB {
     Connection conectar = null;
     String usuario = "root";
     String contrasenia = "1423";
-    String bd = "proyectofinalprogra";
+    String bd = "proyectofinalprograii";
     String ip = "localhost";
     String puerto = "3306";
      
@@ -21,9 +21,7 @@ public class ConexionDB {
     public Connection estableceConexion(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conectar=DriverManager.getConnection(cadena, usuario, contrasenia);
-            JOptionPane.showMessageDialog(null, "Buscando Pokemones...");
-            
+            conectar=DriverManager.getConnection(cadena, usuario, contrasenia);     
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se conecto a la base de datos, error: "+ e.toString());
         }    

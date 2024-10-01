@@ -1,38 +1,38 @@
 package com.mycompany.proyecto_final;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
 public class Proyecto_Final {
 
     private Scanner scanner = new Scanner(System.in);
     private boolean salir = false;
-    private ArrayList<PokemonCombate> equipoUsuario = new ArrayList<>();
-    private ArrayList<PokemonCombate> equipoComputadora = new ArrayList<>();
+    private Entrenador entrenadorJugador;
+    private Entrenador entrenadorComputadora;
 
     public static void main(String[] args) {
-        ConexionDB conec = new ConexionDB();
-        conec.estableceConexion();
-
         Proyecto_Final proyecto = new Proyecto_Final();
-        proyecto.MenuPokemon();
+        proyecto.menuPrincipal();
     }
 
-    // Menu principal
-    public void MenuPokemon() {
+    public void menuPrincipal() {
         while (!salir) {
             System.out.println("Ingrese una opción: ");
-            System.out.println("1. Ver Pokedex");
+            System.out.println("1. Pokedex");
             System.out.println("2. Combate");
+            System.out.println("3. Salir");
 
-            int opcion1 = scanner.nextInt();
+            int opcion = scanner.nextInt();
             scanner.nextLine();
 
-            switch (opcion1) {
+            switch (opcion) {
                 case 1:
                     menuPokedex();
                     break;
                 case 2:
-                    menuPrincipalCombate();
+                    menuCombate();
+                    break;
+                case 3:
+                    salir = true;
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
@@ -40,139 +40,57 @@ public class Proyecto_Final {
         }
     }
 
-    // Menu para la Pokedex
+    // Menú Pokedex
     public void menuPokedex() {
-        while (!salir) {
-
-                System.out.println("1. Ver pokemones normales");
-                System.out.println("2. Ver pokemones de Agua");
-                System.out.println("3. Ver pokemones de Fuego");
-                System.out.println("4. Ver pokemones de Planta");
-                System.out.println("5. Ver pokemones eléctricos");
-                System.out.println("6. Ver pokemones de Hielo");
-                System.out.println("7. Ver todos los pokemones");
-                System.out.println("8. Salir");
-
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            TipoPokemon tipoPokemon = new TipoPokemon();
-            Pokedex pokedex = new Pokedex();
-
-            switch (opcion) {
-                case 1:
-                    tipoPokemon.getPokemonesNormales();
-                    break;
-                case 2:
-                    tipoPokemon.getPokemonesDeAgua();
-                    break;
-                case 3:
-                    tipoPokemon.getPokemonesDeFuego();
-                    break;
-                case 4:
-                    tipoPokemon.getPokemonesDePlanta();
-                    break;
-                case 5:
-                    tipoPokemon.getPokemonesDeElectrico();
-                    break;
-                case 6:
-                    tipoPokemon.getPokemonesDeHielo();
-                    break;
-                    
-                  case 7:
-                    pokedex.getTodosPokemones();
-                    break;
-                    
-                   case 8:
-                   salir = true;
-                   
-                case 9:
-                    pokedex.getTodosLosPokemon();
-                    break;
-                case 10:
-                    salir = true;
-
-                    break;
-                default:
-                    System.out.println("Opción no válida. Por favor intente de nuevo.");
-            }
-        }
-        System.out.println("Programa terminado.");
+        Pokedex pokedex = new Pokedex();
+        pokedex.mostrarPokedex();
     }
 
-    public void menuPrincipalCombate() {
-        System.out.println("Ingrese una opción:");
-        System.out.println("1. Ver Pokémon disponibles para combate.");
-
-        int opcion1 = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (opcion1) {
-            case 1:
-                menuPokemonDisponiblesCombate();
-                break;
-            default:
-                System.out.println("Opción no válida.");
-        }
-    }
-
-    public void menuPokemonDisponiblesCombate() {
-        System.out.println("1. Ver Pokémon tipo agua.");
-        System.out.println("8. Regresar a menú principal");
+    // Menú Combate
+    public void menuCombate() {
+        System.out.println("Selecciona el modo de combate:");
+        System.out.println("1. Contra la computadora");
+        System.out.println("2. Contra otro jugador");
 
         int opcion = scanner.nextInt();
         scanner.nextLine();
 
         switch (opcion) {
             case 1:
-                seleccionarPokemonAgua(equipoUsuario, scanner);
+                iniciarCombateComputadora();
                 break;
-            case 8:
-                MenuPokemon();
+            case 2:
+                iniciarCombateJugadorVsJugador();
                 break;
             default:
                 System.out.println("Opción no válida.");
         }
     }
 
-    private void seleccionarPokemonAgua(ArrayList<PokemonCombate> equipoUsuario, Scanner scanner) {
-        ArrayList<PokemonCombate> pokemonAgua = PokemonCombateAgua.obtenerPokemonAgua();
+    // Combate contra la computadora
+    private void iniciarCombateComputadora() {
+        System.out.println("Iniciando combate contra la computadora...");
+        entrenadorJugador = new Entrenador("Jugador 1", false);
+        entrenadorComputadora = new Entrenador("Computadora", true);
 
-        while(equipoUsuario.size() < 3){
-            System.out.println("Seleccione un Pokémon tipo agua:");
-            for (int i = 0; i < pokemonAgua.size(); i++) {
-                System.out.println((i + 1) + " " + pokemonAgua.get(i).getNombre());
-            }
+        entrenadorJugador.seleccionarEquipo(scanner);
+        entrenadorComputadora.seleccionarEquipoAleatorio();  // La computadora selecciona su equipo aleatorio
 
-            int seleccion = scanner.nextInt();
-            scanner.nextLine();
-
-            if (seleccion > 0 && seleccion <= pokemonAgua.size()) {
-                PokemonCombate pokemonSeleccionado = pokemonAgua.get(seleccion - 1);
-                equipoUsuario.add(pokemonSeleccionado);
-                System.out.println("Has seleccionado a " + pokemonSeleccionado.getNombre());
-            } else {
-                System.out.println("Selección no válida.");
-            }
-        }
-        iniciarCombate();
+        Combate combate = new Combate(entrenadorJugador, entrenadorComputadora);
+        combate.iniciarCombate();
     }
 
-    private void seleccionarEquipoComputadora(ArrayList<PokemonCombate> equipoComputadora, ArrayList<PokemonCombate> equipoUsuario) {
-        ArrayList<PokemonCombate> pokemonDisponibles = PokemonCombateAgua.obtenerPokemonAgua();
+    // Combate jugador vs jugador
+    private void iniciarCombateJugadorVsJugador() {
+        System.out.println("Iniciando combate entre dos jugadores...");
 
-        pokemonDisponibles.removeAll(equipoUsuario);
+        entrenadorJugador = new Entrenador("Jugador 1", false);
+        Entrenador entrenadorJugador2 = new Entrenador("Jugador 2", false);
 
-        while (equipoComputadora.size() < 3) {
-            int indiceAleatorio = (int) (Math.random() * pokemonDisponibles.size());
-            equipoComputadora.add(pokemonDisponibles.remove(indiceAleatorio));
-        }
-        System.out.println("La computadora ha seleccionado a sus Pokémon.");
-    }
+        entrenadorJugador.seleccionarEquipo(scanner);
+        entrenadorJugador2.seleccionarEquipo(scanner);
 
-    private void iniciarCombate() {
-        seleccionarEquipoComputadora(equipoComputadora, equipoUsuario);
-        Combate combate = new Combate(equipoUsuario, equipoComputadora);
-        combate.iniciarCombate(scanner);
+        Combate combate = new Combate(entrenadorJugador, entrenadorJugador2);
+        combate.iniciarCombate();
     }
 }

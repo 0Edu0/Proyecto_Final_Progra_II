@@ -1,75 +1,82 @@
 package com.mycompany.proyecto_final;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
+public class Combate {
+    private Entrenador jugador1;
+    private Entrenador jugador2;
+    private Scanner scanner;
 
-public class Combate { 
-    private ArrayList<PokemonCombate> equipoUsuario;
-    private ArrayList<PokemonCombate> equipoComputadora;
-    
-    public Combate(ArrayList<PokemonCombate> equipoUsuario, ArrayList<PokemonCombate> equipoComputadora) {
-        this.equipoUsuario = equipoUsuario;
-        this.equipoComputadora = equipoComputadora;
+    public Combate(Entrenador jugador1, Entrenador jugador2) {
+        this.jugador1 = jugador1;
+        this.jugador2 = jugador2;
+        this.scanner = new Scanner(System.in);
     }
-    public void iniciarCombate(Scanner scanner){
-        int turnoUsuario = 0;
-        int turnoComputadora = 0;
-        
-        while (!equipoUsuario.isEmpty() && !equipoComputadora.isEmpty()){
-            System.out.println("Tu Pokemon actual: " + equipoUsuario.get(turnoUsuario).getNombre());
-            System.out.println("Pokemon de la computadora: " + equipoComputadora.get(turnoComputadora).getGenero());
-            
-            System.out.println("Elige una habilidad para atacar: ");
-            for (int i = 0; i < equipoUsuario.get(turnoUsuario).getHabilidades().size(); i++){
-                Habilidades habilidad = equipoUsuario.get(turnoUsuario).getHabilidades().get(i);
-                System.out.println((i + 1) + " " + habilidad.getNombreHabilidad() + " - Potencia: " + habilidad.getPotencia());
-            }
-            int seleccionHabilidad = scanner.nextInt();
-            scanner.nextLine();
-            
-            if (seleccionHabilidad > 0 && seleccionHabilidad <= equipoUsuario.get(turnoUsuario).getHabilidades().size()) {
-                Habilidades habilidadSeleccionada = equipoUsuario.get(turnoUsuario).getHabilidades().get(seleccionHabilidad - 1);
-                realizarAtaque(habilidadSeleccionada, equipoComputadora.get(turnoComputadora));
-                
-                if (equipoComputadora.get(turnoComputadora).getHp_base() <= 0){
-                    System.out.println("Has derrotado a " + equipoComputadora.get(turnoComputadora).getNombre());
-                    equipoComputadora.remove(turnoComputadora);
-                
-                    if (equipoComputadora.isEmpty()){
-                        System.out.println("Has ganado el combate");
-                        return;
-                    }
-                }
-                
-            realizarAtaqueComputadora(equipoComputadora.get(turnoComputadora), equipoUsuario.get(turnoUsuario));
-            
-                if (equipoUsuario.get(turnoUsuario).getHp_base() <= 0){
-                    System.out.println(equipoUsuario.get(turnoUsuario).getNombre() + " ha sido derrotado");
-                    equipoUsuario.remove(turnoUsuario);
 
-                    if (equipoUsuario.isEmpty()){
-                        System.out.println("Has perdido el combate");
-                        return;
-                    }
-                }
-            } else {
-                System.out.println("Seleccion no valida");
+    public void iniciarCombate() {
+        System.out.println("El combate ha comenzado entre " + jugador1.getNombre() + " y " + jugador2.getNombre());
+
+        while (jugador1.tienePokemonVivos() && jugador2.tienePokemonVivos()) {
+            // Turno del Jugador 1
+            realizarTurno(jugador1, jugador2);
+
+            // Si el jugador 2 no tiene Pokémon vivos, termina el combate
+            if (!jugador2.tienePokemonVivos()) {
+                System.out.println(jugador2.getNombre() + " se ha quedado sin Pokémon. ¡" + jugador1.getNombre() + " gana el combate!");
+                break;
+            }
+
+            // Turno del Jugador 2 o la computadora
+            realizarTurno(jugador2, jugador1);
+
+            // Si el jugador 1 no tiene Pokémon vivos, termina el combate
+            if (!jugador1.tienePokemonVivos()) {
+                System.out.println(jugador1.getNombre() + " se ha quedado sin Pokémon. ¡" + jugador2.getNombre() + " gana el combate!");
+                break;
             }
         }
     }
-    
-    private void realizarAtaque(Habilidades habilidad, PokemonCombate objetivo){
-        int daño = habilidad.getPotencia();
-        objetivo.setHp_base(objetivo.getHp_base() - daño);
-        System.out.println(objetivo.getNombre() + " ha recibido " + daño + " puntos de daño");
+
+    private void realizarTurno(Entrenador atacante, Entrenador defensor) {
+        PokemonCombate pokemonAtacante = atacante.seleccionarPokemonActivo();
+        PokemonCombate pokemonDefensor = defensor.seleccionarPokemonActivo();
+
+        if (pokemonAtacante == null || pokemonDefensor == null) {
+            return; // Si no hay Pokémon, el combate termina
+        }
+
+        System.out.println(atacante.getNombre() + " ataca con " + pokemonAtacante.getNombre());
+
+        // Mostrar opciones de ataque
+        if (!atacante.esComputadora()) {
+            System.out.println("Elige un ataque para " + pokemonAtacante.getNombre() + ":");
+            pokemonAtacante.mostrarMovimientos();
+            int opcionMovimiento = scanner.nextInt();
+            scanner.nextLine();
+
+            if (opcionMovimiento < 1 || opcionMovimiento > pokemonAtacante.getMovimientos().size()) {
+                System.out.println("Movimiento no válido. Pierdes el turno.");
+                return;
+            }
+
+            Movimiento ataqueSeleccionado = pokemonAtacante.getMovimientos().get(opcionMovimiento - 1);
+            ejecutarAtaque(pokemonAtacante, pokemonDefensor, ataqueSeleccionado);
+        } else {
+            // Turno de la computadora: elige un ataque aleatoriamente
+            Movimiento ataqueSeleccionado = pokemonAtacante.getMovimientos().get((int) (Math.random() * pokemonAtacante.getMovimientos().size()));
+            ejecutarAtaque(pokemonAtacante, pokemonDefensor, ataqueSeleccionado);
+        }
+
+        // Mostrar estado del Pokémon defensor después del ataque
+        if (pokemonDefensor.getHp() <= 0) {
+            System.out.println(pokemonDefensor.getNombre() + " ha sido derrotado.");
+        } else {
+            System.out.println(pokemonDefensor.getNombre() + " tiene " + pokemonDefensor.getHp() + " HP restante.");
+        }
     }
-    
-    private void realizarAtaqueComputadora (PokemonCombate atacante, PokemonCombate objetivo) {
-        int indiceHabilidad = (int) (Math.random() * atacante.getHabilidades().size());
-        Habilidades habilidadSeleccionada = atacante.getHabilidades().get(indiceHabilidad);
-        
-        System.out.println("La computadora utiliza " + habilidadSeleccionada.getNombreHabilidad() + " con potencia " + habilidadSeleccionada.getPotencia());
-        
-        realizarAtaque(habilidadSeleccionada, objetivo);
+
+    private void ejecutarAtaque(PokemonCombate atacante, PokemonCombate defensor, Movimiento ataqueSeleccionado) {
+        System.out.println(atacante.getNombre() + " usa " + ataqueSeleccionado.getNombre() + "!");
+        defensor.recibirDanio(ataqueSeleccionado.getPoder());
     }
 }

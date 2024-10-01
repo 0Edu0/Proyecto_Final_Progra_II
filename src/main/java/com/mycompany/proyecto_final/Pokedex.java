@@ -1,65 +1,60 @@
 package com.mycompany.proyecto_final;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Pokedex {
+    private PokemonService pokemonService;
 
-    private int cantPokemonGuardados; 
-    private ArrayList<Pokemon> listadoPokemons;
-
-    // Constructor
     public Pokedex() {
-        this.cantPokemonGuardados = 0;
-        this.listadoPokemons = new ArrayList<>();
+        this.pokemonService = new PokemonService();
     }
 
-    // Getters y Setters
-    public int getCantPokemonGuardados() {
-        return cantPokemonGuardados;
-    }
+    public void mostrarPokedex() {
+        System.out.println("1. Ver Pokémon de tipo Agua");
+        System.out.println("2. Ver Pokémon de tipo Fuego");
+        System.out.println("3. Ver Pokémon de tipo Planta");
+        System.out.println("4. Ver Pokémon de tipo Eléctrico");
+        System.out.println("5. Ver Pokémon de tipo Hielo");
+        System.out.println("6. Ver Pokémon de tipo Normal");
+        System.out.println("7. Ver todos los Pokémon");
 
-    public void setCantPokemonGuardados(int cantPokemonGuardados) {
-        this.cantPokemonGuardados = cantPokemonGuardados;
-    }
+        int opcion = new Scanner(System.in).nextInt();
 
-    public ArrayList<Pokemon> getListadoPokemons() {
-        return listadoPokemons;
-    }
-
-    public void setListadoPokemons(ArrayList<Pokemon> listadoPokemons) {
-        this.listadoPokemons = listadoPokemons;
-    }
-
-    // Método para obtener todos los Pokémon
-    public void getTodosLosPokemon() {
-        QuerysMysql_Pokedex querymysql = new QuerysMysql_Pokedex();
-        String query = "SELECT * FROM proyectofinalprograii.todos;";
-        
-        List<Pokemon> pokemones = querymysql.realizarConsulta(query);
-        
-        if (pokemones != null && !pokemones.isEmpty()) {
-            for (Pokemon pokemon : pokemones) {
-                querymysql.imprimirDetallesPokemon(pokemon);
-            }
-        } else {
-            System.out.println("No se ha registrado ningún Pokémon.");
+        switch (opcion) {
+            case 1:
+                mostrarPokemones("agua");
+                break;
+            case 2:
+                mostrarPokemones("fuego");
+                break;
+            case 3:
+                mostrarPokemones("planta");
+                break;
+            case 4:
+                mostrarPokemones("electrico");
+                break;
+            case 5:
+                mostrarPokemones("hielo");
+                break;
+            case 6:
+                mostrarPokemones("normal");
+                break;
+            case 7:
+                List<PokemonCombate> todosPokemones = pokemonService.obtenerTodosLosPokemones();
+                for (PokemonCombate p : todosPokemones) {
+                    System.out.println(p.getNombre());
+                }
+                break;
+            default:
+                System.out.println("Opción no válida.");
         }
     }
 
-    // Método para obtener una lista básica de Pokémon
-    public void getTodosPokemones() {
-        QuerysMysql querymysql = new QuerysMysql();
-        String query = "SELECT no_pokedex, nombre FROM todos_pokemones";  // Usando la vista
-
-        List<Pokemon> pokemones = querymysql.realizarConsultaBasica(query);
-
-        if (pokemones != null && !pokemones.isEmpty()) {
-            for (Pokemon pokemon : pokemones) {
-                querymysql.imprimirDetallesPokemonBasico(pokemon);
-            }
-        } else {
-            System.out.println("No se encontraron Pokémon en la base de datos.");
+    private void mostrarPokemones(String tipo) {
+        List<PokemonCombate> pokemones = pokemonService.obtenerPokemonesPorTipo(tipo);
+        for (PokemonCombate p : pokemones) {
+            System.out.println(p.getNombre());
         }
     }
 }
