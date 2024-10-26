@@ -23,6 +23,8 @@ public class Combate {
             // Si el jugador 2 no tiene Pokémon vivos, termina el combate
             if (!jugador2.tienePokemonVivos()) {
                 System.out.println(jugador2.getNombre() + " se ha quedado sin Pokémon. ¡" + jugador1.getNombre() + " gana el combate!");
+                jugador1.incrementarCombatesGanados();
+                verificarEvolucion(jugador1);
                 break;
             }
 
@@ -32,6 +34,8 @@ public class Combate {
             // Si el jugador 1 no tiene Pokémon vivos, termina el combate
             if (!jugador1.tienePokemonVivos()) {
                 System.out.println(jugador1.getNombre() + " se ha quedado sin Pokémon. ¡" + jugador2.getNombre() + " gana el combate!");
+                jugador2.incrementarCombatesGanados();
+                verificarEvolucion(jugador2);
                 break;
             }
         }
@@ -78,5 +82,14 @@ public class Combate {
     private void ejecutarAtaque(PokemonCombate atacante, PokemonCombate defensor, Movimiento ataqueSeleccionado) {
         System.out.println(atacante.getNombre() + " usa " + ataqueSeleccionado.getNombre() + "!");
         defensor.recibirDanio(ataqueSeleccionado.getPoder());
+    }
+    
+    private void verificarEvolucion(Entrenador entrenador) {
+        for (PokemonCombate pokemon : entrenador.getEquipo()) {
+            if (pokemon.obtenerCombatesGanadosDesdeDB() >= 1) {
+                System.out.println(pokemon.getNombre() + " está evolucionando!");
+                pokemon.evolucionar();
+            }
+        }
     }
 }

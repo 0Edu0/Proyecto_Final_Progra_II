@@ -60,6 +60,12 @@ public class Entrenador {
             System.out.println((i + 1) + ". " + pokemon.getNombre() + " (HP: " + pokemon.getHp() + ")");
         }
     }
+    
+    public void incrementarCombatesGanados(){
+        for (PokemonCombate pokemon : equipo){
+            pokemon.incrementarCombatesGanados();
+        }
+    }
 
     // Método para que el jugador seleccione su equipo
     public void seleccionarEquipo(Scanner scanner) {

@@ -51,11 +51,15 @@ public class PokemonService {
                 int hpBase = rs.getInt("hp_base");
                 int ppBase = rs.getInt("pp_base");
                 String movimientosStr = rs.getString("movimientos");
+                int combatesGanados = rs.getInt("combates_ganados");
+                boolean evolucionado = rs.getBoolean("evolucionado");
 
                 // Convertir los movimientos de la base de datos (cadena separada por comas)
                 ArrayList<Movimiento> movimientos = obtenerMovimientosDesdeCadena(movimientosStr);
 
                 PokemonCombate pokemonCombate = new PokemonCombate(nombre, hpBase, ppBase, movimientos);
+                pokemonCombate.setCombatesGanados(combatesGanados);
+                pokemonCombate.setEvolucionado(evolucionado);
                 pokemones.add(pokemonCombate);
             }
         } catch (Exception e) {

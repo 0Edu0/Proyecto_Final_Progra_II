@@ -10,7 +10,7 @@ public class ConexionDB {
     
     Connection conectar = null;
     String usuario = "root";
-    String contrasenia = "1423";
+    String contrasenia = "dangerloveV20";
     String bd = "proyectofinalprograii";
     String ip = "localhost";
     String puerto = "3306";
