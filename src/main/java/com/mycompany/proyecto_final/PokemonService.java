@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.PreparedStatement;
 
 public class PokemonService {
     private ConexionDB conexionDB;
@@ -67,7 +68,93 @@ public class PokemonService {
         }
         return pokemones;
     }
+    
+        // Método para evolucionar un Pokémon usando una piedra
+    public void evolucionarConPiedra(String tipoPiedra, String nombrePokemon) {
+        try (Connection conn = conexionDB.estableceConexion();
+             PreparedStatement stmt = conn.prepareStatement("SELECT evolucion FROM todos_pokemones WHERE nombre = ? AND piedra_evolutiva = ?")) {
+            stmt.setString(1, nombrePokemon);
+            stmt.setString(2, tipoPiedra);
+            ResultSet rs = stmt.executeQuery();
 
+            if (rs.next()) {
+                String nombreEvolucion = rs.getString("evolucion");
+                System.out.println(nombrePokemon + " ha evolucionado a " + nombreEvolucion + " usando una " + tipoPiedra + "!");
+                actualizarEvolucionEnDB(nombrePokemon, nombreEvolucion);
+            } else {
+                System.out.println(nombrePokemon + " no puede evolucionar con una " + tipoPiedra + ".");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al evolucionar con piedra: " + e.getMessage());
+        }
+    }
+    
+        private void actualizarEvolucionEnDB(String nombrePokemon, String nombreEvolucion) {
+        try (Connection conn = conexionDB.estableceConexion();
+             PreparedStatement stmt = conn.prepareStatement("UPDATE todos_pokemones SET nombre = ? WHERE nombre = ?")) {
+            stmt.setString(1, nombreEvolucion);
+            stmt.setString(2, nombrePokemon);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar evolución: " + e.getMessage());
+        }
+    }
+    
+    /*public List<Evolucion_Piedras> obtenerPokemonPiedraPorTipo(String tipo) {
+        List<Evolucion_Piedras> pokemon = new ArrayList<>();
+        String query = "";
+        
+        switch(tipo.toLowerCase()){
+            case "agua":
+                query = "SELECT nombre FROM pokemon_agua WHERE nombre = 'Poliwhirl'";
+                query = "SELECT nombre FROM pokemon_agua WHERE nombre = 'Shellder'";
+                query = "SELECT nombre FROM pokemon_agua WHERE nombre = 'Staryu'";
+                query = "SELECT nombre FROM pokemon_agua WHERE nombre = 'Eevee'";
+            break;
+            case "fuego":
+                query = "SELECT nombre FROM pokemon_fuego WHERE nombre = 'Vulpix'";
+                query = "SELECT nombre FROM pokemon_fuego WHERE nombre = 'Growlithe'";
+                query = "SELECT nombre FROM pokemon_fuego WHERE nombre = 'Eevee'";
+                break;
+            case "planta":
+                query = "SELECT nombre FROM pokemon_planta WHERE nombre = 'Gloom'";
+                query = "SELECT nombre FROM pokemon_planta WHERE nombre = 'Weepinbell'";
+                query = "SELECT nombre FROM pokemon_planta WHERE nombre = 'Exeggcute'";
+                break;
+            case "electrico":
+                query = "SELECT nombre FROM pokemon_electrico WHERE nombre = 'Pikachu'";
+                query = "SELECT nombre FROM pokemon_electrico WHERE nombre = 'Eevee'";
+                break;
+            case "normal":
+                query = "SELECT nombre FROM pokemon_normal WHERE nombre = 'Nidorina'";
+                query = "SELECT nombre FROM pokemon_normal WHERE nombre = 'Nidorino'";
+                query = "SELECT nombre FROM pokemon_normal WHERE nombre = 'Clefairy'";
+                query = "SELECT nombre FROM pokemon_normal WHERE nombre = 'Jigglypuff'";
+                break;
+            default:
+                System.out.println("Tipo de Pokémon no válido.");
+                return pokemon;
+        }
+        try (Connection conn = conexionDB.estableceConexion();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)){
+            
+            while (rs.next()){
+                String nombreStr = rs.getString("nombre");
+                int hpBase = rs.getInt("hp_base");
+                int ppBase = rs.getInt("pp_base");
+                
+                ArrayList<Nombre> nombres = obtenerNombresDesdeCadena(nombreStr);
+                
+                Evolucion_Piedras evolucionPiedras = new Evolucion_Piedras(nombres, hpBase, ppBase);
+                pokemon.add(evolucionPiedras);
+            }
+        }   catch (Exception e){
+            System.out.println("Error al obtener Pokemon: " + e.getMessage());
+        }
+        return pokemon;
+    }
+*/
     // Mostrar todos los Pokémon (modificado para devolver PokemonCombate también)
     public List<PokemonCombate> obtenerTodosLosPokemones() {
         List<PokemonCombate> pokemones = new ArrayList<>();

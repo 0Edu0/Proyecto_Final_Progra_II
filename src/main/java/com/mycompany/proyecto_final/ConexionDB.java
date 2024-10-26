@@ -1,4 +1,3 @@
-
 package com.mycompany.proyecto_final;
 import java.sql.Connection;
 import java.sql.DriverManager;

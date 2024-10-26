@@ -8,6 +8,7 @@ public class Proyecto_Final {
     private boolean salir = false;
     private Entrenador entrenadorJugador;
     private Entrenador entrenadorComputadora;
+    private PokemonService pokemonService = new PokemonService();
 
     public static void main(String[] args) {
         Proyecto_Final proyecto = new Proyecto_Final();
@@ -19,7 +20,8 @@ public class Proyecto_Final {
             System.out.println("Ingrese una opción: ");
             System.out.println("1. Pokedex");
             System.out.println("2. Combate");
-            System.out.println("3. Salir");
+            System.out.println("3. Inventario de Piedras");
+            System.out.println("4. Salir");
 
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -32,8 +34,10 @@ public class Proyecto_Final {
                     menuCombate();
                     break;
                 case 3:
-                    salir = true;
+                    menuPiedras();
                     break;
+                case 4:
+                    salir = true;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
             }
@@ -65,6 +69,47 @@ public class Proyecto_Final {
             default:
                 System.out.println("Opción no válida.");
         }
+    }
+    
+    //Menu para evolucion con piedras
+    public void menuPiedras() {
+        System.out.println("Selecciona el tipo de Pokemon que quieras evolucionar.");
+        System.out.println("1. Tipo agua");
+        System.out.println("2. Tipo eléctrico");
+        System.out.println("3. Tipo fuego");
+        System.out.println("4. Tipo hielo");
+        System.out.println("5. Tipo normal");
+        System.out.println("6. Tipo planta");
+        
+        int opcionPiedra = scanner.nextInt();
+        scanner.nextLine();
+        
+        String tipoPiedra = "";
+        switch (opcionPiedra) {
+            case 1:
+                tipoPiedra = "Piedra Agua";
+                break;
+            case 2:
+                tipoPiedra = "Piedra Trueno";
+                break;
+            case 3:
+                tipoPiedra = "Piedra Fuego";
+                break;
+            case 4:
+                tipoPiedra = "Piedra Hielo";
+                break;
+            case 5:
+                tipoPiedra = "Piedra Hoja";
+                break;
+            default:
+                System.out.println("Opción no válida.");
+                return;
+        }
+        
+        System.out.println("Introduce el nombre del Pokémon que quieres evolucionar:");
+        String nombrePokemon = scanner.nextLine();
+
+        pokemonService.evolucionarConPiedra(tipoPiedra, nombrePokemon);
     }
 
     // Combate contra la computadora
